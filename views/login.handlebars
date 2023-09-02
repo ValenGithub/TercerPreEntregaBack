@@ -1,0 +1,88 @@
+<style>
+	body {
+		background: linear-gradient(to bottom, #7cf0f0, #c276e6);
+		 /* Cambia el color de fondo según tus preferencias */
+	}
+
+	.container {
+		margin-top: 100px;
+	}
+
+	.login-section,
+	.register-section {
+		border-radius: 5px;
+		background-color: #e6fdff;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		padding: 50px 20px;
+	}
+
+	.login-section h1 {
+		text-align: center;
+		margin-bottom: 30px;
+	}
+
+	.login-section form {
+		padding: 30px;
+	}
+
+	.login-section .form-control {
+		border-color: #d3d3d3;
+	}
+
+	.login-section .btn-primary {
+		border-color: #000000;
+		background: linear-gradient(to bottom, #6a41ff, #c57ce7);
+		color: #fff;
+	}
+
+	.login-section .btn-primary:hover {
+		border-color: #0062cc;
+		background: linear-gradient(to bottom, #7cf0f0, #c276e6);
+	}
+
+	.register-link {
+		margin-top: 20px;
+	}
+
+	.register-link p {
+		margin-bottom: 0;
+	}
+
+	.register-link button {
+		border-radius: 5px;
+		background: linear-gradient(to bottom, #28a745, #218838);
+		border-color: #28a745;
+	}
+
+	.register-link button:hover {
+		background: linear-gradient(to bottom, #218838, #1e7e34);
+		border-color: #1e7e34;
+	}
+</style>
+
+<section class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="login-section">
+				<h1>Ingresar</h1>
+				<form action="/api/users/auth" method="post">
+					<div class="form-group">
+						<input type="email" class="form-control" placeholder="Correo Electrónico" aria-label="Correo" name="email" required>
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" name="password" required>
+					</div>
+					<button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+					<a href="/api/users/github" class="btn btn-primary btn-block">Ingresar con GitHub</a>
+				</form>
+				<div class="register-link text-center">
+					<p>¿No tienes una cuenta? Regístrate</p>
+					<button class="btn btn-primary btn-block" onclick="location.href='/register'">Crear Usuario</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+

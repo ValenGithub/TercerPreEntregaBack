@@ -1,0 +1,28 @@
+
+<h1 class="productListTitle">Listado de Productos</h1>
+
+<h4>Los productos agregados hasta el momento son:</h4>
+
+<div class="productListContainer">
+  <div class="row">
+    {{#each renderProdList}}
+    <div class="col-lg-6 col-md-6">
+      <div class="card mb-3">
+        <img src="{{this.thumbnail}}" class="card-img-top" alt="Imagen del producto">
+        <hr class="card-divider">
+        <div class="card-body">
+          <h5 class="card-title">{{this.title}}</h5>
+          <ul class="list-unstyled">
+            <li>Descripción: {{this.description}}</li>
+            <li>Precio: {{this.price}}</li>
+            <li>Stock: {{this.stock}}</li>
+            <li>Código: {{this.code}}</li>
+          </ul>
+          <button class="btn btn-primary btn-add-to-cart">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>

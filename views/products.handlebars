@@ -1,0 +1,83 @@
+<style>
+	body {
+		background: linear-gradient(to bottom, #7cf0f0, #c276e6);
+		 /* Cambia el color de fondo según tus preferencias */
+	}
+
+    .card {
+        border-radius: 5px;
+		background-color: #f0fcfd;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		padding: 50px 20px;
+    }
+
+    .btn-primary {
+		border-color: #000000;
+		background: linear-gradient(to bottom, #6a41ff, #c57ce7);
+		color: #fff;
+	}
+</style>   
+
+<div><br /></div>
+
+<div class="container">
+    <div class="column">    
+        <h1 class="productListTitle">Productos</h1>
+
+        <h4>Los productos agregados hasta el momento son:</h4>
+
+        <div class="col-12 h-200">
+            <div class="row productListContainer">
+                {{#each docs}}
+                <div class="col-md-3">
+                    <div class="card w-70 h-400"style="margin: 10px; padding: 10px; border: 1px solid black;">
+                        <img src="{{this.thumbnail}}" class="card-img-top" alt="Imagen del producto">
+                        <hr class="card-divider">
+                        <div class="card-body">
+                            <h5 class="card-title"style="font-size: 30px;">{{this.title}}</h5>
+                            <ul class="list-unstyled">
+                                <li><b>Descripción:</b> {{this.description}}</li>
+                                <li><b>Precio:</b> {{this.price}}</li>
+                                <li><b>Stock:</b> {{this.stock}}</li>
+                                <li><b>Código:</b> {{this.code}}</li>
+                            </ul>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="{{_id}}">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <div id="bodyproducts"></div>
+
+        <div class="col-12 text-center">
+            <nav>
+                <ul class="pagination">
+                    {{#if hasPrevPage}}
+                    <li class="page-item">
+                        <a class="page-link" href="?limit={{limit}}&page={{prevPage}}">Previous</a>
+                    </li>
+                    {{else}}
+                    <li class="page-item disabled">
+                        <span class="page-link">Previous</span>
+                    </li>
+                    {{/if}}
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">{{ page }}</a>
+                    </li>
+                    {{#if hasNextPage}}
+                    <li class="page-item">
+                        <a class="page-link" href="?limit={{limit}}&page={{nextPage}}">Next</a>
+                    </li>
+                    {{else}}
+                    <li class="page-item disabled">
+                        <span class="page-link">Next</span>
+                    </li>
+                    {{/if}}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<script src="/js/index.js"></script>

@@ -1,0 +1,79 @@
+<style>
+	body {
+		background: linear-gradient(to bottom, #7cf0f0, #c276e6);
+		 /* Cambia el color de fondo según tus preferencias */
+	}
+
+	.container {
+		margin-top: 100px;
+	}
+
+	.login-section,
+	.register-section {
+		border-radius: 5px;
+		background-color: #e6fdff;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		padding: 50px 20px;
+	}
+
+	.login-section h1,
+	.register-section h1 {
+		text-align: center;
+		margin-bottom: 30px;
+	}
+
+	.login-section form,
+	.register-section form {
+		padding: 30px;
+	}
+
+	.login-section .form-control,
+	.register-section .form-control {
+		border-color: #d3d3d3;
+	}
+
+	.login-section .btn-primary,
+	.register-section .btn-primary {
+		border-color: #000000;
+		background: linear-gradient(to bottom, #6a41ff, #c57ce7);
+		color: #fff;
+	}
+
+	.login-section .btn-primary:hover,
+	.register-section .btn-primary:hover {
+		background: linear-gradient(to bottom, #0069d9, #005cbf);
+		border-color: #0062cc;
+	}
+</style>
+
+<section class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="register-section">
+				<h1>Registrar Nuevo Usuario</h1>
+				<form action="/api/users/" method="post">
+					<div class="form-group row">
+						<div class="col-6">
+							<input type="text" class="form-control" placeholder="Nombre" aria-label="Nombre" name="first_name">
+						</div>
+						<div class="col-6">
+							<input type="text" class="form-control" placeholder="Apellido" aria-label="Apellido" name="last_name">
+						</div>
+					</div>
+					<div class="form-group">
+						<input type="email" class="form-control" placeholder="Correo Electrónico" aria-label="Correo" name="email">
+					</div>
+					<div class="form-group row">
+						<div class="col-6">
+							<input type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" name="password">
+						</div>
+						<div class="col-6">
+							<input type="text" class="form-control" placeholder="Imagen" aria-label="Imagen" name="img">
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary btn-block">Registrar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
