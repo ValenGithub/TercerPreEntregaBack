@@ -6,10 +6,7 @@ import { middlewarePassportJwt } from "../middlewares/jwt.middleware.js";
 
 const viewsRouter = Router();
 
-// viewsRouter.get("/", async (req, res) => {
-//   const products = await productService.obtenerProductos();
-//   res.render("index",  { renderProdList: products } );
-// });
+
 
 viewsRouter.get("/products", middlewarePassportJwt, async (req, res) => {
 	const user = req.user
@@ -71,6 +68,21 @@ viewsRouter.get('/current', middlewarePassportJwt, (req, res) => {
 		user
 	  });
 });
+
+viewsRouter.get('/admin/users', middlewarePassportJwt, async (req, res, next) => {
+    try {
+        // Obtén la lista de usuarios desde tu controlador de usuarios
+        const userList = await userController.getAll();
+
+		console.log("User List:", userList); // Agregar este console.log
+
+        res.render('adminUsers', { userList });
+    } catch (error) {
+        // Maneja errores si ocurren durante la obtención de la lista de usuarios
+        next(error);
+    }
+});
+
 
 
 

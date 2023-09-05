@@ -3,7 +3,7 @@ const cartId = localStorage.getItem('cartClient');
 
 async function verifyCart() {
   if (cartId !== null) {
-    console.log(cartId, "el cart creado anteriormentessssss");
+  
   } else {
     try {
       const response = await fetch(`/api/carts`, {

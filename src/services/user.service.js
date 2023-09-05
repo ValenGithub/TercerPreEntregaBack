@@ -3,8 +3,14 @@ export default class UserService {
         this.dao = dao;
     }
 
-    getAll() {
-        return this.dao.getAll();
+    async getAll() {
+        try {
+            const userList = await this.dao.getAll();
+            console.log(userList); // Agrega este console.log para verificar la lista de usuarios en el servicio
+            return userList;
+        } catch (error) {
+            throw error;
+        }
     }
 
     getByEmail(email) {

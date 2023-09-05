@@ -20,25 +20,7 @@ class cartDao {
 		return await this.model.findById(cartId).populate('products.product').lean();
 	}
 
-	// async agregarProductoCarrito(cartId, prodId) {
-	// 	const carrito = await this.model.findOne({ _id: cartId });
-	// 	const producto = await productService.obtenerProductoById(prodId);
-	  		
-	// 	const productoExistente = carrito.products.find(
-	// 	  (item) => item.product.toString() === prodId
-	// 	);
-	  
-	// 	if (productoExistente) {
-	// 	  productoExistente.quantity += 1;
-	// 	} else {
-	// 	  carrito.products.push({
-	// 		product: producto._id,
-	// 		quantity: 1
-	// 	  });
-	// 	}
-	  
-	// 	return await carrito.save();
-	// }
+
 	async agregarProductoCarrito(cid,pid) {
 		try {
 			const cart = await this.model.findById(cid);

@@ -18,6 +18,7 @@ import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import inicializePassport from './config/passport.config.js';
 import enviroment from './config/enviroment.js'
+import errorsManagerMiddleware from './middlewares/errorsManager.middleware.js'
 
 
 const messages = [];
@@ -81,6 +82,8 @@ app.use('/api/users', usersRouter);
 app.use('/api/purchase', ticketRouter);
 
 
+app.use(errorsManagerMiddleware)
+
 
 mongoose.connect(
 	enviroment.DB_LINK
@@ -89,6 +92,11 @@ mongoose.connect(
 const httpServer = app.listen(enviroment.PORT, () => {
   console.log(`Listening in ${enviroment.PORT}`); //Check de que el servidor se encuentra funcionando en el puerto 8080.
 });
+
+
+
+
+
 const io = new Server(httpServer);
 const messageService = new MessageService(io);
  
