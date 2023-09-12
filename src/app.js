@@ -17,25 +17,24 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import inicializePassport from './config/passport.config.js';
-import enviroment from './config/enviroment.js'
-import errorsManagerMiddleware from './middlewares/errorsManager.middleware.js'
+import enviroment from './config/enviroment.js';
+import errorsManagerMiddleware from './middlewares/errorsManager.middleware.js';
+import { loggerMiddleware } from './middlewares/logger.middleware.js';
 
 
 const messages = [];
-// Creamos la aplicación
 const app = express();
-//const productManager = new ProductManager("./products.json");
 
 app.use(express.json());
-// Utilizamos el middleware para parsear los datos de la petición
 app.use(express.urlencoded({ extended: true }));
+app.use(loggerMiddleware)
 app.use(express.static("public"));
 app.engine('handlebars', exphbs.engine());
 app.set('views' , 'views/' );
 app.set('view engine','handlebars');
 app.use(cookieParser())
 app.use((req, res, next) => {
-  res.locals.layout = 'main'; // Establecer el nombre del layout principal
+  res.locals.layout = 'main'; 
   next();
 });
 

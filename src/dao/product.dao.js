@@ -1,4 +1,7 @@
 import  productModel  from '../models/productModel.js';
+import CustomErrors from '../utils/customErrors.js';
+import { generateErrorProduct } from '../utils/info.js';
+import EErrors from '../utils/EErrors.js';
 
 class ProductDao {
 	constructor(io) {
@@ -29,33 +32,53 @@ class ProductDao {
 		  return result;
 		} catch (error) {
 		  console.error(error);
-		  throw new Error('Error al obtener los productos');
+		  CustomErrors.createError('Error al obtener los productos', generateErrorProduct({ err }), 'Not get', EErrors.PRODUCT_ERROR)
 		}
 	  }
 
 	async agregarProducto(product) {
-		if (!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock ) {
-			throw new Error('Faltan campos');
+		try {
+
+			if (!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock ) {
+				throw new Error('Faltan campos');
+			}
+			return await this.model.create(product);
+		} catch {
+			CustomErrors.createError('Error al agregar el producto', generateErrorProduct({ err }), 'Not add', EErrors.PRODUCT_ERROR)
 		}
-		return await this.model.create(product);
 	}
 
     async obtenerProductoById(prodId) {
-		return await this.model.findById(prodId);
+		try {
+
+			return await this.model.findById(prodId);
+		} catch{
+			CustomErrors.createError('Error al obtener el producto', generateErrorProduct({ err }), 'Not get', EErrors.PRODUCT_ERROR)
+		}
 	  }
 
 	async actualizarProducto(pid, product) {
-		if (!pid) {
-			throw new Error('Ingrese el id del producto a actualizar');
+		try {
+
+			if (!pid) {
+				throw new Error('Ingrese el id del producto a actualizar');
+			}
+			return await this.model.updateOne({ _id: pid }, product);
+		} catch {
+			CustomErrors.createError('Error al actualizara el producto', generateErrorProduct({ err }), 'Not update', EErrors.PRODUCT_ERROR)
 		}
-		return await this.model.updateOne({ _id: pid }, product);
 	}
 
 	async eliminarProducto(pid) {
-        if (!pid) {
-			throw new Error('Ingrese el id del producto a eliminar');
+		try {
+
+			if (!pid) {
+				throw new Error('Ingrese el id del producto a eliminar');
+			}
+			return this.model.deleteOne({ _id: pid });
+		} catch {
+			CustomErrors.createError('Error al agregar eliminar el producto', generateErrorProduct({ err }), 'Not delete', EErrors.PRODUCT_ERROR)
 		}
-		return this.model.deleteOne({ _id: pid });
 	}
 }
 

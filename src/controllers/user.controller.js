@@ -1,5 +1,6 @@
 import UserService from "../services/user.service.js";
 import userDao from "../dao/user.dao.js";
+import userModel from '../models/user.model.js';
 
 
 class UserController {
@@ -8,14 +9,7 @@ class UserController {
     }
 
     async getAll() {
-        try {
-            const userList = await this.service.getAll();
-            console.log(userList); // Agrega este console.log para verificar la lista de usuarios
-            res.render('adminUsers', { userList });
-        } catch (error) {
-            // Maneja errores si ocurren durante la obtención de la lista de usuarios
-            next(error);
-        }
+        return await this.service.getAll();
     }
 
     async getByEmail(email) {
@@ -29,23 +23,12 @@ class UserController {
     async getUserById(id) {
         return await this.service.getUserById(id);
     }
-
     async changeUserRole(userId, newRole) {
         try {
-            // Verifica si el usuario actual es un administrador (debes implementar esta lógica)
-            const isAdmin = req.user && req.user.rol === 'admin'; // Asegúrate de implementar esta lógica
-
-            if (!isAdmin) {
-                throw new Error('Acceso no autorizado'); // Puedes personalizar el mensaje de error
-            }
-
-            // Cambia el rol del usuario utilizando el modelo de usuario y el ID proporcionado
-            await userModel.updateOne({ _id: userId }, { rol: newRole });
-
-            // Devuelve un mensaje de éxito o realiza cualquier otra acción necesaria
-            return 'Rol cambiado con éxito';
+            // Encuentra el usuario por su ID y actualiza el rol
+            const updatedUser = await userModel.findByIdAndUpdate(userId, { rol: newRole }, { new: true });
+            return updatedUser;
         } catch (error) {
-            // Maneja errores si ocurren durante el cambio de rol
             throw error;
         }
     }

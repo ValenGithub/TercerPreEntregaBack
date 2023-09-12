@@ -6,7 +6,7 @@ const sendBtn = document.getElementById('sendBtn');
   Swal.fire({
     title: 'Bienvenido',
     input: 'text',
-    text: 'Identificate para participar del PiolaChat',
+    text: 'Identificate para participar del Ecomerce',
     icon: 'success',
     inputValidator: (value) => {
       return !value && 'Tenes que identificarte, aca fantasmas no...';

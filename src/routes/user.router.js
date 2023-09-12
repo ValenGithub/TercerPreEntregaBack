@@ -86,10 +86,10 @@ usersRouter.post('/logout', (req, res) => {
         const { newRole } = req.body;
 
         // Cambia el rol del usuario utilizando el controlador de usuarios
-        const result = await userController.changeUserRole(req.user, userId, newRole);
+        const updatedUser = await userController.changeUserRole(userId, newRole);
 
         // Redirige de nuevo a la página de administración de usuarios con un mensaje de éxito
-        res.redirect('/admin/users?success=' + encodeURIComponent(result));
+        res.redirect('/admin/users?success=' + encodeURIComponent('Rol cambiado con éxito'));
     } catch (error) {
         // Maneja errores si ocurren durante el cambio de rol
         next(error);

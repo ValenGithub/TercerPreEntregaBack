@@ -7,7 +7,7 @@ class UserDao {
 	}
 
 	async getAll() {
-		return await this.model.find();
+		return await this.model.find().lean();
 	}
 
 	async getByEmail(email) {
