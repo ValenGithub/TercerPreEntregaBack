@@ -57,3 +57,24 @@ agregarProductoBotones.forEach((boton) => {
   addProductCart()
   });
 });
+
+
+const deleteProducttButtons = document.querySelectorAll(".deleteProduct");
+
+deleteProducttButtons.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    const productId = e.target.dataset.productId;
+    async function deleteProductCart() {
+      const response = await fetch(`/api/products/${productId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then(response => {
+         location.reload()
+        })
+    }
+    deleteProductCart()
+  });
+});

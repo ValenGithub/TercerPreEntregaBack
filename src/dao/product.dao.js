@@ -39,7 +39,7 @@ class ProductDao {
 	async agregarProducto(product) {
 		try {
 
-			if (!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock ) {
+			if (!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock || !product.owner) {
 				throw new Error('Faltan campos');
 			}
 			return await this.model.create(product);

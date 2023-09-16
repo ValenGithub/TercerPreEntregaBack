@@ -1,22 +1,31 @@
-import { Router } from 'express';
-import { Server } from "socket.io";
-import messageService from '../dao/message.service.js';
-import { middlewarePassportJwt } from '../middlewares/jwt.middleware.js';
-import { isAuth } from '../middlewares/auth.middleware.js';
+import { Router } from "express";
+import { ChatModel } from "../models/chatModel.js";
+import { middlewarePassportJwt } from "../middlewares/jwt.middleware.js";
+import { io } from "../utils/socket.js";
 
-const messageRouter = Router();
+ 
+const messageRouter = Router()
 
-// Configuración de Socket.IO
-const server = new Server();
-const io = server.io;
 
-messageRouter.get('/', middlewarePassportJwt, isAuth, async (req, res) => {
-	try {
-		const messages = await messageService.obtenerMensajes()
-		res.send(messages);
-	} catch (err) {
-		res.status(500).send({ err });
-	}
+messageRouter.post('/', middlewarePassportJwt , async (req, res) => {
+
+    try {
+
+        const { user, menssage } = req.body;
+        const newMessage = new ChatModel({ user, menssage });
+        await newMessage.save();
+
+        const messages = await ChatModel.find({}).lean();
+
+        io.emit('List-Message', {
+            messages: messages
+
+        })
+
+        res.redirect('/chat');
+    } catch (err) {
+        res.render('error', { error: err.message });
+    }
 });
 
-export { messageRouter };
+export { messageRouter }

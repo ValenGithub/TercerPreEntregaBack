@@ -1,6 +1,5 @@
-
 const cartId = localStorage.getItem('cartClient');
-console.log(cartId)
+
 
 async function mostrarCarrito() {
   if (cartId !== null) {
@@ -12,7 +11,6 @@ async function mostrarCarrito() {
         },
       });
       const data = await response.json();
-      console.log(data)
 
       const cartHtml = document.getElementById('mostrarCart');
       cartHtml.innerHTML = '';
@@ -25,7 +23,6 @@ async function mostrarCarrito() {
                       <li>
                           <img class="img-product" src="${product.product.thumbnail}" alt="">
                           <p class="title">${product.product.title}</p>
-                          <p class="id">${product.product._id}</p>
                           <p>Cantidad: ${product.quantity}</p>
                           <p>Precio: ${product.product.price * product.quantity}</p>   
                           <button class="btn btn-sm btn-success removeProduct" data-product-id="${product.product._id}">Eliminar</button>
@@ -42,20 +39,18 @@ async function mostrarCarrito() {
       removeProductCart.forEach((btn) => {
         btn.addEventListener("click", async (e) => {
           const productId = e.target.dataset.productId;
-          console.log(productId)
           const cartId = localStorage.getItem('cartClient');
-          
-          async function eliminarProductoDeCarrito() {
+          async function deleteProductCart() {
             try {
-              const response = await fetch(`/api/carts/${cartId}/products/${productId}`, {
+              const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
                 },
-              }).then(() => {
-               
               });
-              
+
+              const data = await response.json();
+              location.reload()
               const cartHtml = document.getElementById('mostrarCart');
               cartHtml.innerHTML = '';
               await mostrarCarrito();
@@ -63,8 +58,8 @@ async function mostrarCarrito() {
               console.error("Error:", error);
             }
           }
-          
-          await eliminarProductoDeCarrito();
+
+          await deleteProductCart();
         });
       });
 
@@ -72,7 +67,7 @@ async function mostrarCarrito() {
 
       succesCart.forEach((btn) => {
         btn.addEventListener("click", async (e) => {
-          async function purchase() {a
+          async function purchase() {
             try {
               const response = await fetch(`/api/purchase/${cartId}`, {
                 method: "POST",

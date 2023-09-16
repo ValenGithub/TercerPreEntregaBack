@@ -20,7 +20,8 @@ viewsRouter.get("/products", middlewarePassportJwt, async (req, res) => {
 	);
 	
 	data.user = user;
-	res.render('products', data);
+	const autorizado = user.rol === "ADMIN" || user.rol === "PREMIUM";
+	res.render('products', {...data, autorizado});
 });
 
 viewsRouter.get("/realtimeproducts", async (req, res) => {
@@ -61,12 +62,14 @@ viewsRouter.get('/login', (req, res) => {
 });
 
 viewsRouter.get('/current', middlewarePassportJwt, (req, res) => {
-	const user = req.user
-	console.log(user)
+	const user = req.user;
+	const autorizado = user.rol === "ADMIN" || user.rol === "PREMIUM";
+	console.log(autorizado)
 	res.render('index', {
 		title: 'Perfil de Usuario',
 		message: 'Private route',
-		user
+		user,
+		autorizado
 	  });
 });
 
@@ -79,6 +82,12 @@ viewsRouter.get('/adminchange', middlewarePassportJwt, ensureAdmin, async (req, 
     
 });
 
+viewsRouter.get('/agregarproducto', middlewarePassportJwt, async(req, res) =>{
+	const user = req.user
+
+	res.render('agregarproducto', {user})
+}
+)
 
 
 

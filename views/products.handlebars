@@ -18,66 +18,88 @@
 	}
 </style>   
 
-<div><br /></div>
+        <div><br /></div>
+        <div class="container">
+            <div class="column">    
+                <h1 class="productListTitle">Productos</h1>
 
-<div class="container">
-    <div class="column">    
-        <h1 class="productListTitle">Productos</h1>
+                <h4>Los productos agregados hasta el momento son:</h4>
 
-        <h4>Los productos agregados hasta el momento son:</h4>
-
-        <div class="col-12 h-200">
-            <div class="row productListContainer">
-                {{#each docs}}
-                <div class="col-md-3">
-                    <div class="card w-70 h-400"style="margin: 10px; padding: 10px; border: 1px solid black;">
-                        <img src="{{this.thumbnail}}" class="card-img-top" alt="Imagen del producto">
-                        <hr class="card-divider">
-                        <div class="card-body">
-                            <h5 class="card-title"style="font-size: 30px;">{{this.title}}</h5>
-                            <ul class="list-unstyled">
-                                <li><b>Descripción:</b> {{this.description}}</li>
-                                <li><b>Precio:</b> {{this.price}}</li>
-                                <li><b>Stock:</b> {{this.stock}}</li>
-                                <li><b>Código:</b> {{this.code}}</li>
-                            </ul>
-                            <button class="btn btn-primary btn-add-to-cart" data-product-id="{{_id}}">Agregar al carrito</button>
+                {{#if autorizado}}
+                <div class="col-12 h-200">
+                    <div class="row productListContainer">
+                        {{#each docs}}
+                        <div class="col-md-3">
+                            <div class="card w-70 h-400"style="margin: 10px; padding: 10px; border: 1px solid black;">
+                                <button class="btn btn-sm btn-danger deleteProduct" data-product-id="{{_id}}">ELIMINAR PRODUCTO</button>
+                                <img src="{{this.thumbnail}}" class="card-img-top" alt="Imagen del producto">
+                                <hr class="card-divider">
+                                <div class="card-body">
+                                    <h5 class="card-title"style="font-size: 30px;">{{this.title}}</h5>
+                                    <ul class="list-unstyled">
+                                        <li><b>Descripción:</b> {{this.description}}</li>
+                                        <li><b>Precio:</b> {{this.price}}</li>
+                                        <li><b>Stock:</b> {{this.stock}}</li>
+                                        <li><b>Código:</b> {{this.code}}</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
+                        {{/each}}
                     </div>
                 </div>
-                {{/each}}
+                {{else}}
+                <div class="col-12 h-200">
+                    <div class="row productListContainer">
+                        {{#each docs}}
+                        <div class="col-md-3">
+                            <div class="card w-70 h-400"style="margin: 10px; padding: 10px; border: 1px solid black;">
+                                <img src="{{this.thumbnail}}" class="card-img-top" alt="Imagen del producto">
+                                <hr class="card-divider">
+                                <div class="card-body">
+                                    <h5 class="card-title"style="font-size: 30px;">{{this.title}}</h5>
+                                    <ul class="list-unstyled">
+                                        <li><b>Descripción:</b> {{this.description}}</li>
+                                        <li><b>Precio: $</b>{{this.price}}</li>
+                                        <li><b>Stock:</b> {{this.stock}}</li>
+                                        <li><b>Código:</b> {{this.code}}</li>
+                                    </ul>
+                                    <button class="btn btn-primary btn-add-to-cart" data-product-id="{{_id}}">Agregar al carrito</button>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                {{/if}}
+
+                <div class="col-12 text-center">
+                    <nav>
+                        <ul class="pagination">
+                            {{#if hasPrevPage}}
+                            <li class="page-item">
+                                <a class="page-link" href="?limit={{limit}}&page={{prevPage}}">Previous</a>
+                            </li>
+                            {{else}}
+                            <li class="page-item disabled">
+                                <span class="page-link">Previous</span>
+                            </li>
+                            {{/if}}
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="#">{{ page }}</a>
+                            </li>
+                            {{#if hasNextPage}}
+                            <li class="page-item">
+                                <a class="page-link" href="?limit={{limit}}&page={{nextPage}}">Next</a>
+                            </li>
+                            {{else}}
+                            <li class="page-item disabled">
+                                <span class="page-link">Next</span>
+                            </li>
+                            {{/if}}
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
-
-        <div id="bodyproducts"></div>
-
-        <div class="col-12 text-center">
-            <nav>
-                <ul class="pagination">
-                    {{#if hasPrevPage}}
-                    <li class="page-item">
-                        <a class="page-link" href="?limit={{limit}}&page={{prevPage}}">Previous</a>
-                    </li>
-                    {{else}}
-                    <li class="page-item disabled">
-                        <span class="page-link">Previous</span>
-                    </li>
-                    {{/if}}
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="#">{{ page }}</a>
-                    </li>
-                    {{#if hasNextPage}}
-                    <li class="page-item">
-                        <a class="page-link" href="?limit={{limit}}&page={{nextPage}}">Next</a>
-                    </li>
-                    {{else}}
-                    <li class="page-item disabled">
-                        <span class="page-link">Next</span>
-                    </li>
-                    {{/if}}
-                </ul>
-            </nav>
-        </div>
-    </div>
-</div>
 <script src="/js/index.js"></script>

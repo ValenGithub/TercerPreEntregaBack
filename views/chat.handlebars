@@ -1,16 +1,28 @@
-<section>
+<div class="container-chat">
+    <form action='/api/chat' method='post'>
+        {{#if user}}
+        <div class="mb-3">
+            <h2>Comunidad</h2>
 
-	<div id='Title'>Chateando</div>
-	<div id='messages'></div>
-	<div class="contenedor-envio">
-		<input type='text' id='msj' />
-		<button id='sendBtn'>Enviar</button>
-	</div>
+            <input type='text' class='form-control' placeholder='Email' aria-label='user' name='user'
+                value='{{user.email}}' />
+            <div id="emailHelp" class="form-text">chatea con los demas usuario</div>
 
-</section>
+            <input type='text' class='form-control' placeholder='ingresa un mensaje' aria-label='menssage'
+                name='menssage' />
+            <button type="submit" class="btn btn-primary">enviar</button>
+        </div>
+        {{/if}}
 
-<script
-	src='https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js'
-></script>
+    </form>
+
+    <div class='container-mensaje'>
+        <h2 class="Lista">Chat</h2>
+        <div id="List-Message"></div>
+    </div>
+</div>
+
+
+
 <script src='/socket.io/socket.io.js'></script>
 <script src="/js/chat.js"></script>

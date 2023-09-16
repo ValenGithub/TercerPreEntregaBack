@@ -2,7 +2,7 @@
 import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
-import { menssagerModel } from '../models/menssage.model.js';
+import { ChatModel } from '../models/chatModel.js';
 
 // inicializo express y server.io
 export const app = express();
@@ -14,7 +14,7 @@ io.on('connection', async (socket) => {
 	console.log('Cliente conectado');
 
 	try {
-		const messages = await menssagerModel.find({}).lean();
+		const messages = await ChatModel.find({}).lean();
 		socket.emit('List-Message', { messages });
 	} catch (error) {
 		console.error('Error al obtener los mensajes:', error);
