@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import passport from "passport";
-import { generateToken, authToken } from "../middlewares/jwt.middleware.js";
+import { generateToken } from "../middlewares/jwt.middleware.js";
 import ErrorCodes from "../utils/EErrors.js";
 import { generateErrorAutenticacion, generateErrorDeslogueo, generateErrorEnrutamiento, generateUserErrorInfo } from "../utils/info.js";
 import CustomErrors from "../utils/customErrors.js";
@@ -40,7 +40,7 @@ usersRouter.post('/auth', (req, res, next) => {
 		}
 
 		const token = generateToken(user);
-
+		
 		res.cookie('token', token, {
 			httpOnly: true,
 			maxAge: 60000000,
