@@ -1,0 +1,49 @@
+2023-09-23T00:41:44.929Z [31merror[39m: [31mError changing user role: Cannot read properties of undefined (reading 'service')[39m
+2023-09-23T00:42:25.245Z [31merror[39m: [31mError changing user role: Cannot read properties of undefined (reading 'service')[39m
+2023-09-23T00:45:38.767Z [31merror[39m: [31mError changing user role: this.service.saveUser is not a function[39m
+2023-09-23T01:00:01.673Z [31merror[39m: [31mError al agregar producto: err is not defined[39m
+2023-09-23T01:04:03.760Z [31merror[39m: [31mError al agregar producto: err is not defined[39m
+2023-09-23T01:06:47.081Z [31merror[39m: [31mError al agregar producto: err is not defined[39m
+2023-09-23T01:14:23.991Z [31merror[39m: [31mproducts validation failed: owner: Cast to ObjectId failed for value "valentinomoreschi@hotmail.com" (type string) at path "owner" because of "BSONError"[39m
+2023-09-23T01:14:23.998Z [31merror[39m: [31mError al agregar producto: Not add[39m
+2023-09-23T01:16:25.959Z [31merror[39m: [31mproducts validation failed: owner: Cast to ObjectId failed for value "valentinomoreschi@hotmail.com" (type string) at path "owner" because of "BSONError"[39m
+2023-09-23T01:16:25.961Z [31merror[39m: [31mError al agregar producto: Not add[39m
+2023-09-23T01:30:59.011Z [31merror[39m: [31muserDao.getUserByEmail is not a function[39m
+2023-09-23T01:30:59.015Z [31merror[39m: [31mError al agregar producto: Not add[39m
+2023-09-23T01:32:00.328Z [31merror[39m: [31mSolo los usuarios premium pueden ser dueños de un producto.[39m
+2023-09-23T01:32:00.331Z [31merror[39m: [31mError al agregar producto: Not add[39m
+2023-09-23T01:32:58.319Z [31merror[39m: [31mSolo los usuarios premium pueden ser dueños de un producto.[39m
+2023-09-23T01:32:58.323Z [31merror[39m: [31mError al agregar producto: Not add[39m
+2023-09-23T01:34:03.250Z [31merror[39m: [31mSolo los usuarios premium pueden ser dueños de un producto.[39m
+2023-09-23T01:34:03.258Z [31merror[39m: [31mError al agregar producto: Not add[39m
+2023-09-23T01:34:51.847Z [31merror[39m: [31mSolo los usuarios premium pueden ser dueños de un producto.[39m
+2023-09-23T01:34:51.852Z [31merror[39m: [31mError al agregar producto: Not add[39m
+2023-09-23T01:40:57.714Z [31merror[39m: [31mSolo los usuarios premium pueden ser dueños de un producto.[39m
+2023-09-23T01:40:57.717Z [31merror[39m: [31mError al agregar producto: Not add[39m
+2023-09-23T01:43:08.060Z [31merror[39m: [31mSolo los usuarios premium pueden ser dueños de un producto.[39m
+2023-09-23T01:43:08.063Z [31merror[39m: [31mError al agregar producto: Not add[39m
+2023-09-23T01:44:03.877Z [31merror[39m: [31mSolo los usuarios premium pueden ser dueños de un producto.[39m
+2023-09-23T01:44:03.879Z [31merror[39m: [31mError al agregar producto: Not add[39m
+2023-09-23T01:48:15.534Z [31merror[39m: [31mError al agregar producto: Cannot set headers after they are sent to the client[39m
+2023-09-23T01:51:42.954Z [31merror[39m: [31mE11000 duplicate key error collection: test.products index: code_1 dup key: { code: 321 }[39m
+2023-09-23T01:52:14.483Z [31merror[39m: [31mE11000 duplicate key error collection: test.products index: code_1 dup key: { code: 321 }[39m
+2023-09-23T01:52:14.484Z [31merror[39m: [31mError al agregar producto: Not add[39m
+2023-09-23T03:43:45.287Z [31merror[39m: [31mError al agregar producto: Cannot set headers after they are sent to the client[39m
+2023-09-23T03:45:10.646Z [31merror[39m: [31mE11000 duplicate key error collection: test.products index: code_1 dup key: { code: 32132 }[39m
+2023-09-23T03:45:10.649Z [31merror[39m: [31mError al agregar producto: Not add[39m
+2023-09-23T03:50:05.438Z [31merror[39m: [31mError al agregar producto al carrito: err is not defined[39m
+2023-09-23T03:50:05.600Z [31merror[39m: [31mError al agregar producto al carrito: err is not defined[39m
+2023-09-23T15:22:28.839Z [31merror[39m: [31mno se envio el email de restablecimiento[39m
+2023-09-23T15:29:53.734Z [31merror[39m: [31mexpiro el tiempo, debe volver a enviar el email[39m
+2023-09-23T15:29:53.800Z [31merror[39m: [31mError undefined: Failed to lookup view "restpassword" in views directory "C:\Users\valen\OneDrive\Escritorio\TerceraPreEntregaBack\views"[39m
+2023-09-23T15:33:37.371Z [31merror[39m: [31mexpiro el tiempo, debe volver a enviar el email[39m
+2023-09-23T15:59:56.728Z [31merror[39m: [31mexpiro el tiempo, debe volver a enviar el email[39m
+2023-09-23T16:01:33.737Z [31merror[39m: [31mexpiro el tiempo, debe volver a enviar el email[39m
+2023-09-23T17:18:42.689Z [31merror[39m: [31mError en passport.authenticate (login): Login Error[39m
+2023-09-23T17:18:42.691Z [31merror[39m: [31mError 5: Login Error[39m
+2023-09-23T17:35:52.781Z [31merror[39m: [31mError en passport.authenticate (login): Login Error[39m
+2023-09-23T17:35:52.783Z [31merror[39m: [31mError 5: Login Error[39m
+2023-09-23T17:36:13.780Z [31merror[39m: [31mError en passport.authenticate (login): Login Error[39m
+2023-09-23T17:36:13.781Z [31merror[39m: [31mError 5: Login Error[39m
+2023-09-23T17:36:34.198Z [31merror[39m: [31mError en passport.authenticate (login): Login Error[39m
+2023-09-23T17:36:34.199Z [31merror[39m: [31mError 5: Login Error[39m

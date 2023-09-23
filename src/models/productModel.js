@@ -24,9 +24,10 @@ export const productSchema = new mongoose.Schema({
 		unique: true
 	},
 	owner: {
-		type: String,
-		default: 'eladmin@admin.com'
-	},
+		type: mongoose.Schema.Types.ObjectId, 
+		ref: 'users',
+		default: null
+	  },
     stock: {
 		type: Number,
         required: true

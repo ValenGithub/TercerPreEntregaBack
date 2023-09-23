@@ -6,6 +6,7 @@ import { comparePassword, hashPassword } from '../utils/encript.util.js';
 import CartController from '../controllers/cart.controller.js';
 import { ExtractJwt, Strategy } from "passport-jwt";
 import UserDTO from "../dto/user.dto.js";
+import enviroment from './enviroment.js';
 
 
 
@@ -20,41 +21,41 @@ const inicializePassport = () => {
 			{ usernameField: 'email', passReqToCallback: true },
 			async (req, username, password, done) => {
 				const { first_name, last_name, img } = req.body;
-
+	
 				try {
 					if (!first_name || !last_name || !username) {
-                        return done(null, false, {
-                            message: 'Todos los campos deben estar llenos',
-                        });
-                    }
+						return done(null, false, {
+							message: 'Todos los campos deben estar llenos',
+						});
+					}
+	
 					// recuperar usuario con ese email
 					const user = await userController.getByEmail(username);
-
+	
 					// si existe, devolver error
 					if (user) {
 						return done(null, false, {
 							message: 'El usuario ya existe',
 						});
 					}
-
+	
 					// encriptar password
 					const hashedPassword = await hashPassword(password);
-
+	
 					const userdto = new UserDTO({
-                        first_name,
-                        last_name,
-                        username,
-                        password: hashedPassword,
-                        img,
-                    });
-						
-					if (userdto.email === "eladmin@admin.com") {
-                        userdto.rol = "ADMIN";
-                    }
-
+						first_name,
+						last_name,
+						email: username,
+						password: hashedPassword,
+						img,
+					});
+	
+					if (userdto.email === "valentinomoreschi@hotmail.com") {
+						userdto.rol = "ADMIN";
+					}
+	
 					const newUser = await userController.createUser(userdto);
-					
-
+	
 					return done(null, newUser);
 				} catch (error) {
 					done(error);
@@ -62,8 +63,7 @@ const inicializePassport = () => {
 			}
 		)
 	);
-
-
+	
 
 	passport.use(
 		'login',
@@ -132,34 +132,18 @@ const inicializePassport = () => {
 		done(null, user._id);
 	});
 
-    passport.deserializeUser(async (id, done) => {
-        const user = await userController.getUserById(id);
-        if (user.email === "adminCoder@coder.com") {
-            const adminUser = { ...user, role: "admin" };
-            done(null, adminUser);
-        } else {
-            done(null, user);
-        }
-    });
 
 	passport.use(
 		'jwt',
 		new jwtStrategy(
 			{
 				jwtFromRequest: jwtExtract.fromExtractors([cookieExtractor]),
-				secretOrKey: 'privatekey',
+				secretOrKey: enviroment.KEYJWT,
 			},
 			(payload, done) => {
 				done(null, payload);
 			}
-		),
-		async (payload, done) => {
-			try {
-				return done(null, payload)
-			} catch (error) {
-				done(error)
-			}
-		}
+		)
 	)
 };
 

@@ -15,7 +15,14 @@ class UserDao {
 	}
 
 	async createUser(userData) {
-		return await this.model.create(userData);
+		console.log("Intentando crear usuario con datos:", userData);
+		try {
+			const newUser = await this.model.create(userData);
+			console.log("Usuario creado exitosamente:", newUser);
+			return newUser;
+		} catch (error) {
+			console.error("Error creando usuario:", error);
+		}
 	}
 
 	async getUserById(id) {

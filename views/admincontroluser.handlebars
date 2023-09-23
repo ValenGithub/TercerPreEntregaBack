@@ -1,5 +1,4 @@
-
-   <div class="container">
+<div class="container">
     <h1>Admin Control de Usuarios</h1>
     <table>
         <thead>
@@ -14,9 +13,34 @@
             <tr>
                 <td>{{this.email}}</td>
                 <td>{{this.rol}}</td>
-                
+                <td>
+                    <form action='/api/users/premium/{{this._id}}' method='post' class="row g-3">
+                        <input type="hidden" id="userAction" name="userAction" value="">
+                        <div class="col-12">
+                            <button type="button" class="btn btn-primary cartid" data-action="PREMIUM">CAMBIAR A PREMIUM</button>
+                            <button type="button" class="btn btn-primary cartid" data-action="usuario">CAMBIAR A USUARIO</button>
+                        </div>
+                    </form>
+                </td>
             </tr>
             {{/each}}
         </tbody>
     </table>
-</div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    const buttons = document.querySelectorAll(".btn.cartid");
+    
+    buttons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            const action = this.getAttribute("data-action");
+            const form = this.closest("form");
+            const inputAction = form.querySelector("#userAction");
+            
+            inputAction.value = action;
+            form.submit();
+        });
+    });
+});
+    </script>

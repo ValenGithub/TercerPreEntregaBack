@@ -1,11 +1,11 @@
 import UserService from "../services/user.service.js";
 import userDao from "../dao/user.dao.js";
-import userModel from '../models/user.model.js';
-
+import { logger } from "../middlewares/logger.middleware.js";
 
 class UserController {
     constructor() {
         this.service = new UserService(userDao);
+        this.changeUserRole = this.changeUserRole.bind(this);
     }
 
     async getAll() {
@@ -23,17 +23,42 @@ class UserController {
     async getUserById(id) {
         return await this.service.getUserById(id);
     }
-    async changeUserRole(userId, newRole) {
+    async changeUserRole(req, res, next) {
+        const userId = req.params.uid;
+        const desiredAction = req.body.userAction;
+    
         try {
-            // Encuentra el usuario por su ID y actualiza el rol
-            const updatedUser = await userModel.findByIdAndUpdate(userId, { rol: newRole }, { new: true });
-            return updatedUser;
+            const user = await this.service.getUserById(userId); 
+            
+            if (!user) {
+                logger.error(`User with ID ${userId} not found.`);
+                return res.status(404).json({ error: 'User not found.' });
+            }
+    
+            switch (desiredAction) {
+                case 'PREMIUM':
+                    user.rol = 'PREMIUM';
+                    break;
+                case 'usuario':
+                    user.rol = 'usuario';
+                    break;
+                default:
+                    logger.error(`Invalid action: ${desiredAction}`);
+                    return res.status(400).json({ error: 'Invalid action.' });
+            }
+    
+            await user.save();;
+    
+            logger.info(`User role changed. ID: ${userId}, New role: ${user.rol}`);
+    
+           
+            res.redirect('/adminchange');
+    
         } catch (error) {
-            throw error;
+            logger.error(`Error changing user role: ${error.message}`);
+            res.status(500).json({ error: 'Internal server error.' });
         }
     }
-
-
 }
 
 

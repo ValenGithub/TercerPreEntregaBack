@@ -1,6 +1,7 @@
 import winston from "winston";
 import enviroment from "../config/enviroment.js";
 
+const { combine, timestamp, printf, colorize } = winston.format;
 
 const colors = {
     error: 'red',
@@ -10,39 +11,54 @@ const colors = {
     debug: 'white',
 };
 
-
 winston.addColors(colors);
 
-const logger = winston.createLogger({
+const customFormat = printf(({ level, message, timestamp }) => {
+    return `${timestamp} ${level}: ${message}`;
+});
+
+export const logger = winston.createLogger({
+    format: combine(
+        colorize({ all: true }),
+        timestamp(),
+        customFormat
+    ),
     transports: [
         new winston.transports.Console({
             level: 'debug',
-            format: winston.format.combine(
-                winston.format.colorize({ all: true }),
-                winston.format.simple(),
-                winston.format.printf((info) => {
-                    return `${info.level}: ${info.message}`;
-                })
-            )
         }),
         new winston.transports.File({ filename: 'register.log', level: 'warn' }),
     ],
 });
 
-const productionLogger = winston.createLogger({
-    transports: [
-        new winston.transports.File({ filename: 'production.log', level: 'info' }),
-    ],
-});
+if (enviroment.NODE_ENV === 'production') {
+    logger.add(
+        new winston.transports.File({ filename: 'production.log', level: 'info' })
+    );
+}
 
 export const loggerMiddleware = (req, res, next) => {
-    req.logger = logger;
-
-    if ( enviroment.NODE_ENV === 'production') {
-        req.logger = productionLogger;
-    }
-
-    logger.info(`${req.method} - ${req.url} - [${req.ip}] - ${req.get('user-agent')} - ${new Date().toISOString()}`);
+    logger.info(`${req.method} - ${req.url} - [${req.ip}] - ${req.get('user-agent')}`);
     next();
 };
 
+export const errorHandlerMiddleware = (err, req, res, next) => {
+    logger.error(`Error Code: ${err.code} - ${err.message}`, {
+        stack: err.stack,
+        path: req.path,
+        method: req.method,
+        ip: req.ip,
+        userAgent: req.get('user-agent')
+    });
+
+    
+    switch (err.code) {
+        case ErrorCodes.INVALID_TYPE:
+            res.render('dataerror')
+            break;
+      
+        default:
+            res.render('errorservidor');
+            break;
+    }
+};

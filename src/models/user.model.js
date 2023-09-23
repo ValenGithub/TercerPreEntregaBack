@@ -1,32 +1,52 @@
 import mongoose from 'mongoose';
-import  { cartModel }  from './cartModel.js';
+import validator from 'validator';  // Asegúrate de instalar esto: npm install validator
 
 const userSchema = new mongoose.Schema({
-	first_name: String,
-	last_name: String,
-	email: {
-		type: String,
-		unique: true,
-		required: true,
-		index: true,
-	},
-	password: String,
-	cart: {
-		type: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: cartModel
-			}
-		],
-		default: [],
-	},
-	rol: {
-		type: String,
-		default: 'usuario',
-	},
-	img: String,
+    first_name: {
+        type: String,
+        trim: true,
+        required: true,
+        maxlength: 50
+    },
+    last_name: {
+        type: String,
+        trim: true,
+        required: true,
+        maxlength: 50
+    },
+    email: {
+        type: String,
+        unique: true,
+        required: true,
+        trim: true,
+        lowercase: true,
+        validate(value) {
+            if (!validator.isEmail(value)) {
+                throw new Error('Email no válido');
+            }
+        },
+        index: true,
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 8
+    },
+    cart: {
+        type: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'carts'
+            }
+        ],
+        default: [],
+    },
+    rol: {
+        type: String,
+        default: 'usuario',
+    },
+    img: String,
 });
 
 const userModel = mongoose.model('users', userSchema);
-
 export default userModel;

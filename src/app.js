@@ -16,29 +16,27 @@ import passport from 'passport';
 import inicializePassport from './config/passport.config.js';
 import enviroment from './config/enviroment.js'
 import errorsManagerMiddleware from './middlewares/errorsManager.middleware.js'
+import { logger, loggerMiddleware } from './middlewares/logger.middleware.js'; // Asegúrate de importar también 'logger'.
 
-
-
-// Creamos la aplicación
 const app = express();
-//const productManager = new ProductManager("./products.json");
 
 app.use(express.json());
-// Utilizamos el middleware para parsear los datos de la petición
 app.use(express.urlencoded({ extended: true }));
+app.use(loggerMiddleware); // Incorporamos el middleware de winston aquí.
+
 app.use(express.static("public"));
 app.engine('handlebars', exphbs.engine());
 app.set('views' , 'views/' );
 app.set('view engine','handlebars');
 app.use(cookieParser())
 app.use((req, res, next) => {
-  res.locals.layout = 'main'; // Establecer el nombre del layout principal
+  res.locals.layout = 'main';
   next();
 });
 
 const initializeSession = (req, res, next) => {
   if (!req.session.user) {
-    req.session.user = {}; // Inicializa el objeto de usuario en la sesión si no existe
+    req.session.user = {};
   }
   next();
 };
@@ -57,6 +55,7 @@ app.use(
 		saveUninitialized: true,
 	})
 );
+
 app.use(initializeSession);
 inicializePassport();
 app.use(passport.initialize());
@@ -65,8 +64,8 @@ app.use(passport.session());
 app.use('/', viewsRouter); 
 
 app.use((req, res, next) => {
-  req.productController = productController; // Pasamos el objeto productManager a cada solicitud
-  req.io = io; // Pasamos el objeto io a cada solicitud
+  req.productController = productController; 
+  req.io = io; 
   next();
 });
 
@@ -77,22 +76,16 @@ app.use('/api/chat', messageRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/purchase', ticketRouter);
 
-
-app.use(errorsManagerMiddleware)
-
-
-mongoose.connect(
-	enviroment.DB_LINK
-);
-
-const httpServer = app.listen(enviroment.PORT, () => {
-  console.log(`Listening in ${enviroment.PORT}`); //Check de que el servidor se encuentra funcionando en el puerto 8080.
+// Actualizamos el middleware de manejo de errores para que utilice winston.
+app.use((err, req, res, next) => {
+  logger.error(`Error ${err.code}: ${err.message}`); // Aquí registramos el error con winston.
+  errorsManagerMiddleware(err, req, res, next); // Pasamos el control al middleware existente.
 });
 
+mongoose.connect(enviroment.DB_LINK);
 
-
-
+const httpServer = app.listen(enviroment.PORT, () => {
+  logger.info(`Listening in ${enviroment.PORT}`); // Cambiamos console.log por logger.info
+});
 
 const io = new Server(httpServer);
-
-

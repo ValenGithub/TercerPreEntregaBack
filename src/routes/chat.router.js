@@ -11,8 +11,8 @@ messageRouter.post('/', middlewarePassportJwt , async (req, res) => {
 
     try {
 
-        const { user, menssage } = req.body;
-        const newMessage = new ChatModel({ user, menssage });
+        const { user, message } = req.body;
+        const newMessage = new ChatModel({ user, message });
         await newMessage.save();
 
         const messages = await ChatModel.find({}).lean();

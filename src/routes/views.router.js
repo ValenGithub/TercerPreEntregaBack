@@ -29,7 +29,7 @@ viewsRouter.get("/realtimeproducts", async (req, res) => {
   res.render('realTimeProducts', { renderProdList: products });
 });
 
-viewsRouter.get('/chat',middlewarePassportJwt, async (req, res) => {
+viewsRouter.get('/chat', middlewarePassportJwt, async (req, res) => {
 	const user = req.user;
 	res.render('chat', user);
 });
@@ -61,6 +61,33 @@ viewsRouter.get('/login', (req, res) => {
 	});
 });
 
+viewsRouter.get('/resetpassword', (req, res) => {
+	res.render('resetpassword', {
+	  title: 'restablecer contrasena',
+	});
+  });
+
+viewsRouter.get('/forgotpassword/:token', (req, res) => {
+	const token = req.params;
+	res.render('forgotpassword', {
+	  title: 'Olvido contrasena',
+	  token: token.token
+	});
+  });
+
+  viewsRouter.get('/emailsent', (req, res) => {
+	res.render('emailsent', {
+	  title: 'Se envio email de restablecimiento',
+	});
+  });
+  
+  viewsRouter.get('/restpassword', (req, res) => {
+	res.render('restpassword', {
+	  title: 'restablecer contrasena',
+	});
+  });
+  
+
 viewsRouter.get('/current', middlewarePassportJwt, (req, res) => {
 	const user = req.user;
 	const autorizado = user.rol === "ADMIN" || user.rol === "PREMIUM";
@@ -76,9 +103,7 @@ viewsRouter.get('/current', middlewarePassportJwt, (req, res) => {
 viewsRouter.get('/adminchange', middlewarePassportJwt, ensureAdmin, async (req, res) => {
 		const user = req.user
 		const users = await userController.getAll()
-        res.render('admincontroluser', { user, users });
-		console.log(users)
-       
+        res.render('admincontroluser', { user, users });       
     
 });
 

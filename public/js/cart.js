@@ -1,5 +1,6 @@
-const cartId = localStorage.getItem('cartClient');
 
+const cartId = localStorage.getItem('cartClient');
+console.log(cartId)
 
 async function mostrarCarrito() {
   if (cartId !== null) {
@@ -11,6 +12,7 @@ async function mostrarCarrito() {
         },
       });
       const data = await response.json();
+      console.log(data)
 
       const cartHtml = document.getElementById('mostrarCart');
       cartHtml.innerHTML = '';
@@ -42,24 +44,34 @@ async function mostrarCarrito() {
           const cartId = localStorage.getItem('cartClient');
           async function deleteProductCart() {
             try {
-              const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
-                method: "DELETE",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              });
-
-              const data = await response.json();
-              location.reload()
-              const cartHtml = document.getElementById('mostrarCart');
-              cartHtml.innerHTML = '';
-              await mostrarCarrito();
+                const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+        
+                if (!response.ok) {
+                    const text = await response.text();
+                    throw new Error(text);
+                }
+        
+                if (response.headers.get("content-type")?.includes("application/json")) {
+                    const data = await response.json();
+                } else {
+                    throw new Error('La respuesta no es JSON');
+                }
+        
+                const cartHtml = document.getElementById('mostrarCart');
+                cartHtml.innerHTML = '';
+                await mostrarCarrito();
             } catch (error) {
-              console.error("Error:", error);
+                console.error("Error:", error);
             }
-          }
-
-          await deleteProductCart();
+        }
+        
+        await deleteProductCart();
+        
         });
       });
 
@@ -87,7 +99,7 @@ async function mostrarCarrito() {
                   <p>${data.purchase_datatime}</p>
                   <p>Importe de la compra: ${data.amount}</p>   
                   <p>GRACIAS POR SU COMPRA</p>
-                  <a class="nav-link active" aria-current="page" href="http://localhost:8080/profile">VOLVER</a>
+                  <a class="nav-link active" aria-current="page" href="http://localhost:8080/products">VOLVER</a>
                 </div> `;
                 ticketHtml.appendChild(ticketElement);
               }
@@ -121,5 +133,3 @@ async function mostrarCarrito() {
 }
 
 mostrarCarrito();
-
-

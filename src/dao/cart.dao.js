@@ -3,6 +3,7 @@ import productModel from '../models/productModel.js';
 import CustomErrors from '../utils/customErrors.js';
 import { generateErrorCart } from '../utils/info.js';
 import EErrors from '../utils/EErrors.js';
+import { logger } from '../middlewares/logger.middleware.js';
 
 class cartDao {
 	constructor() {
@@ -77,31 +78,26 @@ class cartDao {
 	}
 
 	async eliminarProductoDeCarrito(cartId, prodId) {
-		try {
-			const carrito = await this.model.findOne({ _id: cartId });
+		const carrito = await this.model.findOne({ _id: cartId });
   
-			// Buscar el producto en el arreglo de productos del carrito
-			const producto = carrito.products.find(
-			  (item) => item.product.toString() === prodId
+		
+		const producto = carrito.products.find(
+		  (item) => item.product.toString() === prodId
+		);
+		
+		if (producto) {
+		
+		  if (producto.quantity > 1) {
+			producto.quantity -= 1;
+		  } else {
+			
+			carrito.products = carrito.products.filter(
+			  (item) => item.product.toString() !== prodId
 			);
-			
-			if (producto) {
-			  // Si se encuentra el producto, restar la cantidad en 1
-			  if (producto.quantity > 1) {
-				producto.quantity -= 1;
-			  } else {
-				// Si la cantidad es 1, eliminar el producto del arreglo
-				carrito.products = carrito.products.filter(
-				  (item) => item.product.toString() !== prodId
-				);
-			  }
-			  return await carrito.save();
-			}
-			return carrito;
-			
-        } catch (err) {
-            CustomErrors.createError('Probl en eliminar pid del cid', generateErrorCart({ err }), 'Error cart,  product delete ', EErrors.CART_ERROR)
-        }
+		  }
+		  return await carrito.save();
+		}
+		return carrito;
 		
 	}
 
