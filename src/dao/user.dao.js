@@ -1,3 +1,4 @@
+import { logger } from '../middlewares/logger.middleware.js';
 import userModel from '../models/user.model.js'
 
 class UserDao {
@@ -15,18 +16,27 @@ class UserDao {
 	}
 
 	async createUser(userData) {
-		console.log("Intentando crear usuario con datos:", userData);
+		logger.info("Intentando crear usuario con datos:", userData);
 		try {
 			const newUser = await this.model.create(userData);
-			console.log("Usuario creado exitosamente:", newUser);
+			logger.info("Usuario creado exitosamente:", newUser);
 			return newUser;
 		} catch (error) {
-			console.error("Error creando usuario:", error);
+			logger.error("Error creando usuario:", error);
 		}
 	}
 
 	async getUserById(id) {
 		return await this.model.findById(id);
+	}
+	async deleteUserById(id) {
+		try {
+			const result = await this.model.findByIdAndDelete(id);
+			return result;
+		} catch (error) {
+			logger.error("Error eliminando usuario:", error);
+			throw error;  // Re-lanza el error para que pueda ser manejado por capas superiores.
+		}
 	}
 }
 

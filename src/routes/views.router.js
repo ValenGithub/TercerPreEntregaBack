@@ -100,7 +100,7 @@ viewsRouter.get('/current', middlewarePassportJwt, (req, res) => {
 	  });
 });
 
-viewsRouter.get('/adminchange', middlewarePassportJwt, ensureAdmin, async (req, res) => {
+viewsRouter.get('/admincontroluser', middlewarePassportJwt, ensureAdmin, async (req, res) => {
 		const user = req.user
 		const users = await userController.getAll()
         res.render('admincontroluser', { user, users });       
@@ -113,7 +113,9 @@ viewsRouter.get('/agregarproducto', middlewarePassportJwt, async(req, res) =>{
 	res.render('agregarproducto', {user})
 }
 )
-
+viewsRouter.get('/carterror', (req, res) => {
+    res.render('carterror');
+});
 
 
 

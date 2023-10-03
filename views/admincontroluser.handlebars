@@ -21,6 +21,11 @@
                             <button type="button" class="btn btn-primary cartid" data-action="usuario">CAMBIAR A USUARIO</button>
                         </div>
                     </form>
+                    <form action='/api/users/delete/{{this._id}}' method='post' class="row g-3 mt-2">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-danger delete-btn">DELETE</button>
+                        </div>
+                    </form>
                 </td>
             </tr>
             {{/each}}

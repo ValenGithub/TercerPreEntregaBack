@@ -47,3 +47,33 @@
 2023-09-23T17:36:13.781Z [31merror[39m: [31mError 5: Login Error[39m
 2023-09-23T17:36:34.198Z [31merror[39m: [31mError en passport.authenticate (login): Login Error[39m
 2023-09-23T17:36:34.199Z [31merror[39m: [31mError 5: Login Error[39m
+2023-09-24T23:25:31.251Z [31merror[39m: [31mError undefined: Cannot read properties of undefined (reading 'rol')[39m
+2023-09-24T23:26:05.843Z [31merror[39m: [31mError undefined: Cannot read properties of undefined (reading 'rol')[39m
+2023-09-24T23:28:07.215Z [31merror[39m: [31mError undefined: Cannot read properties of undefined (reading 'rol')[39m
+2023-09-24T23:45:18.603Z [31merror[39m: [31mError undefined: Cannot read properties of undefined (reading 'rol')[39m
+2023-09-24T23:45:40.842Z [31merror[39m: [31mError undefined: Cannot read properties of undefined (reading 'rol')[39m
+2023-09-25T00:03:05.126Z [33mwarn[39m: [33mUsuario con ID undefined intentó eliminar un producto que no le pertenece[39m
+2023-09-25T00:03:47.114Z [31merror[39m: [31mFaltan campos[39m
+2023-09-25T00:03:47.116Z [31merror[39m: [31mError al agregar producto: Not add[39m
+2023-09-25T00:04:00.444Z [33mwarn[39m: [33mUsuario con ID undefined intentó eliminar un producto que no le pertenece[39m
+2023-09-25T00:04:42.750Z [33mwarn[39m: [33mUsuario con ID undefined intentó eliminar un producto que no le pertenece[39m
+2023-09-25T00:06:46.047Z [33mwarn[39m: [33mUsuario con ID undefined intentó eliminar un producto que no le pertenece[39m
+2023-09-25T00:07:16.238Z [33mwarn[39m: [33mUsuario con ID 650cc1c65e8a5a56ea98d84c intentó eliminar un producto que no le pertenece[39m
+2023-09-25T00:11:01.480Z [33mwarn[39m: [33mUsuario con ID 650cc1c65e8a5a56ea98d84c intentó eliminar un producto que no le pertenece[39m
+2023-09-25T00:11:21.924Z [33mwarn[39m: [33mUsuario con ID 650cc1c65e8a5a56ea98d84c intentó eliminar un producto que no le pertenece[39m
+2023-09-25T00:13:35.600Z [33mwarn[39m: [33mUsuario con ID 650cc1c65e8a5a56ea98d84c intentó eliminar un producto que no le pertenece[39m
+2023-09-25T00:15:10.877Z [31merror[39m: [31mError al eliminar producto: req.user._id.equals is not a function[39m
+2023-09-25T14:53:50.239Z [31merror[39m: [31mError undefined: Failed to deserialize user out of session[39m
+2023-09-25T15:55:17.929Z [31merror[39m: [31mError deleting user: this.service.deleteUserById is not a function[39m
+2023-09-25T18:36:38.433Z [33mwarn[39m: [33mToken JWT expired or user not authenticated[39m
+2023-09-25T22:53:35.684Z [33mwarn[39m: [33mUsuario con ID 65120e7c2c8c5e6ed83cd4b1 intentó eliminar un producto que no le pertenece[39m
+2023-09-25T22:53:53.368Z [33mwarn[39m: [33mUsuario con ID 65120e7c2c8c5e6ed83cd4b1 intentó eliminar un producto que no le pertenece[39m
+2023-09-30T17:50:59.910Z [33mwarn[39m: [33mToken JWT expired or user not authenticated[39m
+2023-09-30T17:51:42.157Z [31merror[39m: [31mError en passport.authenticate (login): Login Error[39m
+2023-09-30T17:51:42.158Z [31merror[39m: [31mError 5: Login Error[39m
+2023-09-30T17:53:18.671Z [31merror[39m: [31mError en passport.authenticate (login): Login Error[39m
+2023-09-30T17:53:18.673Z [31merror[39m: [31mError 5: Login Error[39m
+2023-10-03T02:13:02.473Z [31merror[39m: [31mError en passport.authenticate (login): Login Error[39m
+2023-10-03T02:13:02.474Z [31merror[39m: [31mError 5: Login Error[39m
+2023-10-03T02:13:24.292Z [31merror[39m: [31mError al obtener productos paginados[39m
+2023-10-03T02:31:58.324Z [31merror[39m: [31mCannot read properties of undefined (reading 'paginate')[39m

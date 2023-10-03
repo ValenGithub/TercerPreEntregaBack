@@ -50,7 +50,7 @@ const inicializePassport = () => {
 						img,
 					});
 	
-					if (userdto.email === "valentinomoreschi@hotmail.com") {
+					if (userdto.email === enviroment.ADMIN_EMAIL) {
 						userdto.rol = "ADMIN";
 					}
 	
@@ -93,8 +93,8 @@ const inicializePassport = () => {
 		'github',
 		new GitHubStrategy(
 			{
-				clientID: 'Iv1.709563a70cd440d4',
-				clientSecret: '0bb1d1d483929947762e56d399e9345d79d649be',
+				clientID: enviroment.clientID,
+				clientSecret: enviroment.clientSecret,
 				callbackURL: 'http://localhost:8080/api/users/githubcallback',
 			},
 			async (accessToken, refreshToken, profile, done) => {
@@ -131,6 +131,10 @@ const inicializePassport = () => {
     passport.serializeUser((user, done) => {
 		done(null, user._id);
 	});
+	passport.deserializeUser(async (id, done) => {
+        const user = await userController.getUserById(id);
+        done(null, user);
+    });
 
 
 	passport.use(

@@ -1,0 +1,10 @@
+ <div class="error-container">
+        <h1>Error en el Carrito</h1>
+        <p>Lo sentimos, parece que hubo un problema con tu carrito de compras.</p>
+        {{#if errorMessage}}
+        <div class="error-details">
+            <p><strong>Detalles del error:</strong> {{errorMessage}}</p>
+        </div>
+        {{/if}}
+        <a href="http://localhost:8080/products" class="btn btn-primary">Volver al inicio</a> 
+    </div>

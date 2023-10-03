@@ -1,5 +1,6 @@
 import cartService from "../services/cart.service.js";
 import cartDao from "../dao/cart.dao.js";
+import CartDTO from "../dto/cart.dto.js"
 
 
 class CartController {
@@ -12,11 +13,13 @@ class CartController {
     }
 
     async obtenerCarritos(){
-        return this.service.obtenerCarritos();
+        const carts = await this.service.obtenerCarritos();
+        return carts.map(cart => new CartDTO(cart));
     }
 
     async obtenerCarritoById(cartId) {
-        return await this.service.obtenerCarritoById(cartId)
+        const cart = await this.service.obtenerCarritoById(cartId);
+        return new CartDTO(cart);
     }
 
     async agregarProductoCarrito(cid,pid) {

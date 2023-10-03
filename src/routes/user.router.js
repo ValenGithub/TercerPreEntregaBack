@@ -159,4 +159,6 @@ usersRouter.post('/logout', (req, res) => {
 
 usersRouter.post('/premium/:uid', userController.changeUserRole);
 
+usersRouter.post('/delete/:uid', userController.deleteUser);
+
 export { usersRouter };

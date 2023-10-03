@@ -1,6 +1,7 @@
 import ticketDao from "../dao/ticket.dao.js";
 import TickeService from "../services/ticket.service.js";
-
+import TicketDTO from "../dto/ticket.dto.js";
+import { logger } from "../middlewares/logger.middleware.js"; 
 
 class TicketController {
     constructor() {
@@ -9,38 +10,41 @@ class TicketController {
 
     async createTicket(ticket) {
         try {
-            const createTicket = this.service.createTicket(ticket)
-            return createTicket;
+            const createdTicket = await this.service.createTicket(ticket);
+            logger.info('Ticket creado exitosamente.');
+            return new TicketDTO(createdTicket); 
         } catch (error) {
-            console.log('No se pudo crear el ticket', error)
+            logger.error('No se pudo crear el ticket: ' + error.message);
         }
     }
 
     async getTicket() {
         try {
-            const getticket = this.service.getTicket()
-            return getticket;
+            const tickets = await this.service.getTicket();
+            logger.info('Tickets obtenidos exitosamente.');
+            return tickets.map(ticket => new TicketDTO(ticket)); 
         } catch (error) {
-            console.log('Error a traer los ticket', error)
+            logger.error('Error al traer los tickets: ' + error.message);
         }
     }
 
     async getTicketId(id) {
         try {
-            const ticketid = this.service.getTicketId(id)
-            return ticketid;
+            const ticket = await this.service.getTicketId(id);
+            logger.info(`Ticket con ID ${id} obtenido exitosamente.`);
+            return new TicketDTO(ticket); 
         } catch (error) {
-            console.log('No se pudo obtener el ticket', error)
+            logger.error(`No se pudo obtener el ticket con ID ${id}: ` + error.message);
         }
 
     }
 
     async deleteTicket(id) {
         try {
-            const deleteTicket = this.service.deleteTicket(id)
-            return deleteTicket;
+            await this.service.deleteTicket(id);
+            logger.info(`Ticket con ID ${id} eliminado exitosamente.`);
         } catch (error) {
-            console.log('No se pudo eliminar el ticket', error)
+            logger.error(`No se pudo eliminar el ticket con ID ${id}: ` + error.message);
         }
 
     }

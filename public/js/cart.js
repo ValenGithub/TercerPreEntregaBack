@@ -1,6 +1,5 @@
 
 const cartId = localStorage.getItem('cartClient');
-console.log(cartId)
 
 async function mostrarCarrito() {
   if (cartId !== null) {
@@ -12,7 +11,7 @@ async function mostrarCarrito() {
         },
       });
       const data = await response.json();
-      console.log(data)
+    
 
       const cartHtml = document.getElementById('mostrarCart');
       cartHtml.innerHTML = '';

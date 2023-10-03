@@ -26,12 +26,6 @@ verifyCart();
 
 
 
-
-
-
-
-
-// // Obtener todos los botones "agregar al carrito"
 const agregarProductoBotones = document.querySelectorAll('.btn-add-to-cart');
 
 agregarProductoBotones.forEach((boton) => {
@@ -40,19 +34,24 @@ agregarProductoBotones.forEach((boton) => {
     async function addProductCart() {
       const cartId = localStorage.getItem('cartClient');
       console.log(cartId)
+      console.log(productId)
       try {
         const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
         });
-        const data = await response.json();
-        console.log(data)
-
-      } catch (error) {
+        if (response.status === 401) {
+            console.error("Authentication error: Token expired or user not authenticated.");
+            // Aquí puedes redirigir al usuario al inicio de sesión o mostrarle un mensaje.
+        } else {
+            const data = await response.json();
+            console.log(data);
+        }
+    } catch (error) {
         console.error("Error:", error);
-      }
+    }
     }
   addProductCart()
   });

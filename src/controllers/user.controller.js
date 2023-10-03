@@ -6,6 +6,8 @@ class UserController {
     constructor() {
         this.service = new UserService(userDao);
         this.changeUserRole = this.changeUserRole.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
+
     }
 
     async getAll() {
@@ -23,6 +25,7 @@ class UserController {
     async getUserById(id) {
         return await this.service.getUserById(id);
     }
+  
     async changeUserRole(req, res, next) {
         const userId = req.params.uid;
         const desiredAction = req.body.userAction;
@@ -52,10 +55,30 @@ class UserController {
             logger.info(`User role changed. ID: ${userId}, New role: ${user.rol}`);
     
            
-            res.redirect('/adminchange');
+            res.redirect('/admincontroluser');
     
         } catch (error) {
             logger.error(`Error changing user role: ${error.message}`);
+            res.status(500).json({ error: 'Internal server error.' });
+        }
+    }
+    async deleteUser(req, res, next) {
+        const userId = req.params.uid;
+
+        try {
+            const user = await this.service.getUserById(userId);
+    
+            if (!user) {
+                logger.error(`User with ID ${userId} not found.`);
+                return res.status(404).json({ error: 'User not found.' });
+            }
+    
+            await this.service.deleteUserById(userId);
+            logger.info(`User deleted. ID: ${userId}`);
+            res.redirect('/admincontroluser');
+    
+        } catch (error) {
+            logger.error(`Error deleting user: ${error.message}`);
             res.status(500).json({ error: 'Internal server error.' });
         }
     }

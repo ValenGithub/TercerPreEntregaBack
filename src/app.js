@@ -76,16 +76,16 @@ app.use('/api/chat', messageRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/purchase', ticketRouter);
 
-// Actualizamos el middleware de manejo de errores para que utilice winston.
+
 app.use((err, req, res, next) => {
-  logger.error(`Error ${err.code}: ${err.message}`); // Aquí registramos el error con winston.
-  errorsManagerMiddleware(err, req, res, next); // Pasamos el control al middleware existente.
+  logger.error(`Error ${err.code}: ${err.message}`); 
+  errorsManagerMiddleware(err, req, res, next); 
 });
 
 mongoose.connect(enviroment.DB_LINK);
 
 const httpServer = app.listen(enviroment.PORT, () => {
-  logger.info(`Listening in ${enviroment.PORT}`); // Cambiamos console.log por logger.info
+  logger.info(`Listening in ${enviroment.PORT}`); 
 });
 
 const io = new Server(httpServer);

@@ -23,5 +23,12 @@ export default class UserService {
     getUserById(id) {
         return this.dao.getUserById(id);
     }
-
+    deleteUserById(id) {
+        try {
+            const result = this.dao.deleteUserById(id);
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
