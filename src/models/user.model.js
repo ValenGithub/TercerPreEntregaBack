@@ -46,6 +46,10 @@ const userSchema = new mongoose.Schema({
         default: 'usuario',
     },
     img: String,
+    last_connection: {
+        type: Date,
+        default: Date.now 
+    }
 });
 
 const userModel = mongoose.model('users', userSchema);

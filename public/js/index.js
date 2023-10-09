@@ -77,3 +77,4 @@ deleteProducttButtons.forEach((btn) => {
     deleteProductCart()
   });
 });
+

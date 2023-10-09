@@ -77,3 +77,10 @@
 2023-10-03T02:13:02.474Z [31merror[39m: [31mError 5: Login Error[39m
 2023-10-03T02:13:24.292Z [31merror[39m: [31mError al obtener productos paginados[39m
 2023-10-03T02:31:58.324Z [31merror[39m: [31mCannot read properties of undefined (reading 'paginate')[39m
+2023-10-04T23:21:01.034Z [31merror[39m: [31mError en passport.authenticate (login): Login Error[39m
+2023-10-04T23:21:01.038Z [31merror[39m: [31mError 5: Login Error[39m
+2023-10-05T00:35:32.270Z [31merror[39m: [31mError creando usuario: users validation failed: email: Email no válido[39m
+2023-10-05T00:55:10.860Z [33mwarn[39m: [33mIntento de acceso sin autenticación a recurso de ADMIN[39m
+2023-10-05T00:56:31.261Z [33mwarn[39m: [33mIntento de acceso sin autenticación a recurso de ADMIN[39m
+2023-10-05T01:01:59.439Z [31merror[39m: [31mError en passport.authenticate (login): Login Error[39m
+2023-10-05T01:01:59.440Z [31merror[39m: [31mError 5: Login Error[39m

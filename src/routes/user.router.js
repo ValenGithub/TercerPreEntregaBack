@@ -16,6 +16,24 @@ import enviroment from "../config/enviroment.js";
 const usersRouter = Router();
 const privatesecret = enviroment.KEYJWT;
 
+usersRouter.get('/', async (req, res, next) => {
+    try {
+        const users = await userController.getAll()
+        const filteredUsers = users.map(user => ({
+            name: user.name,
+            email: user.email,
+            rol: user.rol
+        }));
+        res.send(filteredUsers)
+    } catch (error) {
+        logger.error("Error al obtener usuarios: " + err.message);
+        res.status(500).send({ err });
+    }
+})
+
+
+
+
 usersRouter.post('/', (req, res, next) => {
     passport.authenticate('register', (err, user, info) => {
         if (err) {
@@ -33,6 +51,8 @@ usersRouter.post('/', (req, res, next) => {
         }
     })(req, res, next);
 });
+
+
 
 usersRouter.post('/auth', (req, res, next) => {
     passport.authenticate('login', (err, user, info) => {
@@ -52,6 +72,65 @@ usersRouter.post('/auth', (req, res, next) => {
             maxAge: 60000000,
         }).redirect('/products');
     })(req, res, next);
+});
+
+usersRouter.delete('/', async (req, res, next) => {
+    try {
+        const fechaLimite = new Date(Date.now() - 5 * 60 * 1000);
+        const usuariosInactivos = await userModel.find({ 
+            last_connection: { $lt: fechaLimite },
+            rol: "usuario"
+        });
+
+        for (let usuario of usuariosInactivos) {
+            const emailOptions = {
+                from: `Notificación de eliminación <moreschivalen44@gmail.com>`,
+                to: `${usuario.email}`,
+                subject: 'Tu cuenta ha sido eliminada debido a inactividad',
+                html: `
+                  <div style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
+                       <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
+                           <div style="text-align: center; padding: 20px 0;">
+                           <h1 style="color: #333;">Notificación de Eliminación de Cuenta</h1>
+                           <img class="logo" src="https://i.postimg.cc/pL1mYXqM/VIP-fotor-bg-remover-20230624162050.png">
+                       </div>
+                       <div style="padding: 20px;">
+                              <p style="margin-bottom: 20px; font-size: 16px; color: #333;">
+                                  Lamentamos informarte que tu cuenta ha sido eliminada debido a inactividad durante los últimos días. 
+                              </p>
+                              <p style="font-size: 14px; color: #777;">
+                                  Si tienes alguna duda o consideras que esto es un error, por favor contáctanos.
+                              </p>
+                         </div>
+                     </div>
+                 </div>`,
+                attachments: [],
+            };
+            
+            await new Promise((resolve, reject) => {
+                transporter.sendMail(emailOptions, (error, info) => {
+                    if (error) {
+                        logger.error(error);
+                        reject(error);
+                    } else {
+                        logger.info('Email sent: ' + info);
+                        resolve(info);
+                    }
+                });
+            });
+        } 
+        
+        await userModel.deleteMany({ 
+            last_connection: { $lt: fechaLimite },
+            rol: "usuario"
+        });
+
+        res.status(200).send({ message: "Usuarios inactivos con rol 'user' eliminados y notificados." });   
+
+    } catch (error) {
+        logger.error("Error al eliminar usuarios: " + error.message);
+        res.status(500).send({ error: "Error al eliminar usuarios inactivos." });
+    }
 });
 
 usersRouter.post('/forgotpassword', async (req, res, next) => {

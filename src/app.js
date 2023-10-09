@@ -16,7 +16,10 @@ import passport from 'passport';
 import inicializePassport from './config/passport.config.js';
 import enviroment from './config/enviroment.js'
 import errorsManagerMiddleware from './middlewares/errorsManager.middleware.js'
-import { logger, loggerMiddleware } from './middlewares/logger.middleware.js'; // Asegúrate de importar también 'logger'.
+import { logger, loggerMiddleware } from './middlewares/logger.middleware.js';
+import swaggerConfig from './config/swaggerConfig.js';
+import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 
 const app = express();
 
@@ -81,6 +84,9 @@ app.use((err, req, res, next) => {
   logger.error(`Error ${err.code}: ${err.message}`); 
   errorsManagerMiddleware(err, req, res, next); 
 });
+
+const specs = swaggerJsDoc(swaggerConfig);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 mongoose.connect(enviroment.DB_LINK);
 

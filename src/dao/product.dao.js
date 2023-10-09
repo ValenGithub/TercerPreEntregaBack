@@ -24,7 +24,7 @@ class ProductDao {
         try {
             const filter = {};
             if (query === 'true') {
-                filter.stock = { $gt: 0 };
+                filter.stock = { $gt: 0 };	
             } else if (query === 'false') {
                 filter.stock = { $lte: 0 };
             }

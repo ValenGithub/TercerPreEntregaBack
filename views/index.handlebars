@@ -30,6 +30,7 @@
 				<li><b>Correo: </b>{{user.email}}</li>
 			</ul>
 			<button><a class="nav-link" href="http://localhost:8080/agregarproducto">CREA TUS PRODUCTOS</a></button>
+			<button onclick="eliminarUsuariosInactivos()">Eliminar usuarios inactivos</button>
 		</div>
 		{{else}}
 		<div class='col-8' style='padding: 50px 20px;'>
@@ -47,3 +48,26 @@
 		</div>
 	</div>
 </section>
+
+<script>
+    function eliminarUsuariosInactivos() {
+        fetch('http://localhost:8080/api/users', {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Error al eliminar usuarios');
+            }
+        })
+        .then(data => {
+            alert('Usuarios eliminados con éxito');
+            console.log(data);
+        })
+        .catch((error) => {
+            alert('Error al eliminar usuarios');
+            console.error('Error:', error);
+        });
+    }
+</script>
