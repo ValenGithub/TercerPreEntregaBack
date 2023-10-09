@@ -61,6 +61,13 @@ viewsRouter.get('/login', (req, res) => {
 	});
 });
 
+viewsRouter.get('/', (req, res) => {
+	
+	res.render('login', {
+		title: 'Inicio de Sesión',
+	});
+});
+
 viewsRouter.get('/resetpassword', (req, res) => {
 	res.render('resetpassword', {
 	  title: 'restablecer contrasena',
