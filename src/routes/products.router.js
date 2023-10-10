@@ -4,6 +4,8 @@ import productController from '../controllers/product.controller.js'
 import { logger } from '../middlewares/logger.middleware.js'; 
 import { ensurePremiumOrAdmin } from '../middlewares/auth.middleware.js';
 import { middlewarePassportJwt } from '../middlewares/jwt.middleware.js';
+import { transporter } from '../utils/nodemailer.js';
+import enviroment from '../config/enviroment.js';
 
 const productsRouter = Router();
 
@@ -43,14 +45,27 @@ productsRouter.put('/:pid',middlewarePassportJwt,ensurePremiumOrAdmin,  async (r
 	}
 });
 
-productsRouter.delete('/:pid',middlewarePassportJwt, ensurePremiumOrAdmin, async (req, res) => {
+
+productsRouter.delete('/:pid', middlewarePassportJwt, ensurePremiumOrAdmin, async (req, res) => {
     const pid = req.params.pid;
     try {
         const product = await productController.obtenerProductoById(pid);
 
-        if (req.user.rol !== 'ADMIN' && String(req.user._id) !== String(product.owner)) {
-            logger.warn(`Usuario con ID ${req.user._id} intentó eliminar un producto que no le pertenece`);
+        // Si el usuario es PREMIUM y no es el propietario del producto
+        if (req.user.rol === 'PREMIUM' && String(req.user._id) !== String(product.owner)) {
+            logger.warn(`Usuario PREMIUM con ID ${req.user._id} intentó eliminar un producto que no le pertenece`);
             return res.status(403).send({ message: "No tienes permisos para eliminar este producto" });
+        }
+
+        // Si el producto es eliminado por un ADMIN y el propietario es un usuario PREMIUM, enviar correo
+        if (req.user.rol === 'ADMIN' && product.owner.rol === 'PREMIUM') {
+            const emailOptions = {
+                from: `Notificaciones <${config.NODEMAILER_MAIL}>`,
+                to: product.owner.email,  // El correo del propietario del producto
+                subject: 'Tu producto ha sido eliminado',
+                text: `El producto ${product.name} ha sido eliminado de nuestra plataforma.`
+            };
+            await transporter.sendMail(emailOptions);
         }
 
         await productController.eliminarProducto(pid);
