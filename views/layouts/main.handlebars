@@ -29,9 +29,9 @@
             >
                 <ul class='navbar-nav ms-auto mb-2 mb-lg-0'>
                     {{#if user}}
-                        <a class="nav-link" href="http://localhost:8080/products">Productos</a>
-                        <a class="nav-link user"  href="http://localhost:8080/carts">Carrito</a>
-                        <a class="nav-link" href="http://localhost:8080/chat">Formulario</a>
+                        <a class="nav-link" href="/products">Productos</a>
+                        <a class="nav-link user"  href="/carts">Carrito</a>
+                        <a class="nav-link" href="/chat">Formulario</a>
                         <li class='nav-item'>
                             <a
                                 class='nav-link active'
@@ -40,7 +40,7 @@
                             >
                             </a>
                         </li>
-                        <a class="nav-link active" aria-current="page" href="http://localhost:8080/current">
+                        <a class="nav-link active" aria-current="page" href="/current">
                                 <img
                                     src='{{user.img}}'
                                     class='img-fluid'
@@ -61,8 +61,8 @@
                         </li>
                     {{else}}
                         <div class="navbar-nav">
-                            <a class="nav-link active" aria-current="page" href="http://localhost:8080/register">Registrate</a>
-                            <a class="nav-link active" aria-current="page" href="http://localhost:8080/login">Login</a>
+                            <a class="nav-link active" aria-current="page" href="/register">Registrate</a>
+                            <a class="nav-link active" aria-current="page" href="/login">Login</a>
                         </div>    
                     {{/if}}
                 </ul>
