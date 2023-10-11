@@ -65,7 +65,7 @@ productsRouter.delete('/:pid', middlewarePassportJwt, ensurePremiumOrAdmin, asyn
                 from: `Notificaciones <${enviroment.NODEMAILER_MAIL}>`,
                 to: owner.email,  
                 subject: 'Tu producto ha sido eliminado',
-                text: `El producto ${product.name} ha sido eliminado de nuestra plataforma.`
+                text: `El producto ${product.title} ha sido eliminado de nuestra plataforma.`
             };
             await transporter.sendMail(emailOptions);
         }
