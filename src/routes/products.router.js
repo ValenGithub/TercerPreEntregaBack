@@ -60,7 +60,7 @@ productsRouter.delete('/:pid', middlewarePassportJwt, ensurePremiumOrAdmin, asyn
         // Si el producto es eliminado por un ADMIN y el propietario es un usuario PREMIUM, enviar correo
         if (req.user.rol === 'ADMIN' && product.owner.rol === 'PREMIUM') {
             const emailOptions = {
-                from: `Notificaciones <${config.NODEMAILER_MAIL}>`,
+                from: `Notificaciones <${enviroment.NODEMAILER_MAIL}>`,
                 to: product.owner.email,  // El correo del propietario del producto
                 subject: 'Tu producto ha sido eliminado',
                 text: `El producto ${product.name} ha sido eliminado de nuestra plataforma.`
