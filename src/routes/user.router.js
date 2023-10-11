@@ -174,7 +174,7 @@ usersRouter.post('/forgotpassword', async (req, res, next) => {
 		})
 		res.redirect('/emailsent')
 	} catch (err) {
-		//agregar custon de errores//
+
 		logger.error('no se envio el email de restablecimiento')
 	}
 
