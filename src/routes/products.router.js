@@ -6,6 +6,7 @@ import { ensurePremiumOrAdmin } from '../middlewares/auth.middleware.js';
 import { middlewarePassportJwt } from '../middlewares/jwt.middleware.js';
 import { transporter } from '../utils/nodemailer.js';
 import enviroment from '../config/enviroment.js';
+import userModel from '../models/user.model.js';
 
 const productsRouter = Router();
 
@@ -58,10 +59,11 @@ productsRouter.delete('/:pid', middlewarePassportJwt, ensurePremiumOrAdmin, asyn
         }
 
         // Si el producto es eliminado por un ADMIN y el propietario es un usuario PREMIUM, enviar correo
-        if (req.user.rol === 'ADMIN' && product.owner.rol === 'PREMIUM') {
+        const owner = await userModel.findById(product.owner);
+        if (owner && owner.rol === 'PREMIUM') {
             const emailOptions = {
-                from: `Notificaciones <moreschivalen44@gmail.com>`,
-                to: product.owner.email,  // El correo del propietario del producto
+                from: `Notificaciones <${enviroment.NODEMAILER_MAIL}>`,
+                to: owner.email,  
                 subject: 'Tu producto ha sido eliminado',
                 text: `El producto ${product.name} ha sido eliminado de nuestra plataforma.`
             };
